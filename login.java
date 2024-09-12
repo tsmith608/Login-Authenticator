@@ -1,3 +1,7 @@
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -10,6 +14,13 @@ public class login {
 
     public static void main(String[] args) {
         loadMap();
+        try {
+            String jsonString = readJsonAsString("C:\\Users\\trent\\IdeaProjects\\login\\src\\users.json");
+            System.out.println("JSON Data: " + jsonString);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Scanner sc = new Scanner(System.in);
         System.out.println("Login | Sign-up");
         String choice = sc.nextLine();
@@ -89,5 +100,12 @@ public class login {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+    }
+    public static String readJsonAsString(String filePath) throws IOException {
+        Gson gson = new Gson();
+        // Parse JSON file into a JsonElement
+        JsonElement jsonElement = JsonParser.parseReader(new FileReader(filePath));
+        // Convert JsonElement to String
+        return gson.toJson(jsonElement);
     }
 }
